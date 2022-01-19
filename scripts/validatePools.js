@@ -7,6 +7,7 @@ import { isEmpty } from '../src/features/helpers/utils.js';
 import { isValidChecksumAddress, maybeChecksumAddress } from './utils.js';
 import { emeraldPools } from '../src/features/configure/vault/emerald_pools.js';
 import { vaultABI, strategyABI } from '../src/features/configure/abi.js';
+import { getMulticallAddress } from '../src/utils/web3Helpers.js';
 
 const chainPools = {
   emerald: emeraldPools,
@@ -241,7 +242,7 @@ const isMofiFeeRecipientCorrect = (pool, chain, recipient, updates) => {
 // Helpers to populate required addresses.
 
 const populateStrategyAddrs = async (chain, pools, web3) => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.mofi.multicall);
+  const multicall = new MultiCall(web3, getMulticallAddress(chain));
 
   const calls = pools.map(pool => {
     const vaultContract = new web3.eth.Contract(vaultABI, pool.earnContractAddress);
@@ -258,7 +259,7 @@ const populateStrategyAddrs = async (chain, pools, web3) => {
 };
 
 const populateKeepers = async (chain, pools, web3) => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.mofi.multicall);
+  const multicall = new MultiCall(web3, getMulticallAddress(chain));
 
   const calls = pools.map(pool => {
     const stratContract = new web3.eth.Contract(strategyABI, pool.strategy);
@@ -275,7 +276,7 @@ const populateKeepers = async (chain, pools, web3) => {
 };
 
 const populateMofiFeeRecipients = async (chain, pools, web3) => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.mofi.multicall);
+  const multicall = new MultiCall(web3, getMulticallAddress(chain));
 
   const calls = pools.map(pool => {
     const stratContract = new web3.eth.Contract(strategyABI, pool.strategy);
@@ -292,7 +293,7 @@ const populateMofiFeeRecipients = async (chain, pools, web3) => {
 };
 
 const populateOwners = async (chain, pools, web3) => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.mofi.multicall);
+  const multicall = new MultiCall(web3, getMulticallAddress(chain));
 
   const vaultCalls = pools.map(pool => {
     const vaultContract = new web3.eth.Contract(vaultABI, pool.earnContractAddress);

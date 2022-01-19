@@ -4,7 +4,7 @@ export const nativeCoins = [
     name: 'Oasis',
     symbol: 'ROSE',
     decimals: 18,
-    wrappedSymbol: 'WROSE',
+    wrappedSymbol: 'wROSE',
     allowance: Infinity,
   },
 ];

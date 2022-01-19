@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'connected-react-router';
 import history from './history';
 import rootReducer from './rootReducer';
+import logger from 'redux-logger';
 
 const router = routerMiddleware(history);
 
@@ -16,6 +17,7 @@ if (process.env.NODE_ENV === 'development') {
   if (window.__REDUX_DEVTOOLS_EXTENSION__) {
     devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__();
   }
+  middlewares.push(logger);
 }
 
 function configureStore(initialState) {
